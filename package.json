@@ -1,0 +1,15 @@
+{
+  "name": "websvn",
+  "version": "0.0.1",
+  "description": "web manage svn repository",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "",
+  "license": "BSD",
+  "devDependencies": {
+    "xml2js": "~0.2.8"
+  }
+}
