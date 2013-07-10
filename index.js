@@ -1,5 +1,5 @@
 var util = require('util');
-var SvnUtil = require('./svn-util');
+var SvnUtil = require('./svnUtil');
 SvnUtil = new SvnUtil();
 
 
