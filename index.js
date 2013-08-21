@@ -39,8 +39,15 @@ optionsUpdate.path = '/home1/zhangbing/html/netdisk/branches/CloudTranscoding';
 var optionsExport = {};
 optionsExport.url = '/home1/zhangbing/html/netdisk/branches/CloudTranscoding';
 optionsExport.target = '';
-SvnUtil.export(optionsExport, function(error, result){
-    if('done' === result){
-        console.log('export done');
-    }
+// SvnUtil.export(optionsExport, function(error, result){
+//     if('done' === result){
+//         console.log('export done');
+//     }
+// });
+
+var optionsList = {};
+optionsList.url = '/home1/zhangbing/html/netdisk/branches';
+SvnUtil.list(optionsList, function(error, result){
+    console.log(error);
+    console.dir(result);
 });

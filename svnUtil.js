@@ -97,12 +97,6 @@ function parseLog(jsonLog){
     return result;
 }
 
-/**
- * [ description]
- * @param  {[type]}   options
- * @param  {Function} callback
- * @return {[type]}
- */
 SvnUtil.prototype.diff = function(options, callback){
 
     var options = options || {};
@@ -252,6 +246,52 @@ SvnUtil.prototype.export = function(options, callback){
     cp.on('close', function(){
         callback(null, 'done');
     });
+};
+
+SvnUtil.prototype.list = function(options, callback){
+
+    var options = options || {};
+    options.url = (undefined !== options.url) ? options.url : '';
+
+    var cmd = 'svn list --xml --incremental ' + options.url;
+    var listInfo = [];
+    var cp = exec(cmd, null, function(error, stdout, stderr){
+        
+        if(null !== error){
+            // console.dir(error);
+            callback(error, null);
+        }else{
+            // var result = parseList(stdout);
+            parseString(stdout, function(error, result){
+                listInfo = parseList(result);
+            });
+        }
+
+    });
+
+    cp.on('close', function(){
+        callback(null, listInfo);
+    })
+
+    function parseList(listXmlInfo){
+
+        var jsonObj = JSON.parse(JSON.stringify(listXmlInfo));
+        // console.dir(util.inspect(jsonObj, {depth : null}));
+        // console.dir(jsonObj.list.entry);
+        var entry = jsonObj.list.entry;
+        var length = entry.length;
+        var result = [];
+
+        for(var i = 0; i < length; i++){
+            var tempObj = {};
+            tempObj.name = entry[i].name[0];
+            tempObj.commit = entry[i].commit[0];
+            result.push(tempObj);
+        }   
+
+        return result;
+    }
+
 };
 
 module.exports = SvnUtil;
